@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: media
+label: Media
+weight: 40
+title: Media
+details: 'Media services allow you to add maps or iframes to your site and increase its visibility.'

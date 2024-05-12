@@ -1,0 +1,12 @@
+name: 'COOKiES Gmaps'
+type: module
+description: 'Submodule of COOKiES to manage google maps inside of COOKiES user consent management.'
+core: 8.x
+core_version_requirement: ^8 || ^9 || ^10
+package: 'COOKiES'
+dependencies:
+  - cookies:cookies
+  - simple_gmap
+
+libraries:
+  - cookies_gmaps/default

@@ -1,0 +1,6 @@
+default:
+  version: 1.0.0
+  js:
+    js/cookies_gmaps.js: {}
+  dependencies:
+    - cookies/cookies.lib

@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: gmaps
+label: 'Google Maps'
+group: media
+url: 'https://policies.google.com/privacy'
+consent: true

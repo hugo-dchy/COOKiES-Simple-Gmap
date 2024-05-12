@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * @file
+ * Contains cookies_gmaps.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\cookies\CookiesKnockOutService;
+/**
+ * Implements hook_theme().
+ */
+function cookies_gmaps_theme() {
+  return array(
+    'cookies__gmaps' => [
+      'variables' => [
+        'include_map' => NULL,
+        'include_static_map' => NULL,
+        'include_link' => NULL,
+        'include_text' => NULL,
+        'address_text' => NULL,
+        'width' => NULL,
+        'height' => NULL,
+        'static_scale' => NULL,
+        'url_suffix' => NULL,
+        'zoom' => NULL,
+        'link_text' => NULL,
+        'map_type' => NULL,
+        'langcode' => NULL,
+        'static_map_type' => NULL,
+        'apikey' => NULL,
+        'iframe_title' => '',
+      ],
+      'template' => 'cookies--gmaps',
+    ],
+  );
+}
+
+
+/**
+ * Implements hook_help().
+ */
+function cookies_gmaps_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the cookies_ga module.
+    case 'help.page.cookies_gmaps':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Submodule of COOKiES to manage Google Maps inside of COOKiES user consent management.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function cookies_gmaps_preprocess_field(&$variables) {
+  // If you want to knock-out an iframe from a field hook will give you all you
+  // need.
+
+  // The Knock-Out-Service tests, if the the COOKiES UI block is present on this page.
+  // So a knock-out will only be done if the plugin is present that can heal the knock-out.
+  $doKo = CookiesKnockOutService::getInstance()->doKnockOut();
+
+  if (isset($variables["items"][0]["content"]["#theme"])) {
+    if ($doKo && $variables["element"]["#field_type"] == 'string' && $variables["items"][0]["content"]["#theme"] ==  "simple_gmap_output") {
+      foreach ($variables["items"] as &$item) {
+        // Move src to data-src and replace src by fallback.
+        $item["content"]["#theme"] = 'cookies__gmaps';
+      }
+    }
+  }
+  
+}
